@@ -1,3 +1,4 @@
+module main
 import time
 
 fn print_field(field[]array_int) {
