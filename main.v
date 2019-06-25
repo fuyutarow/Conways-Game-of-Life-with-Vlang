@@ -1,15 +1,27 @@
 import time
 
+const (
+	OFFSET = '    '
+	CELL_LIVE = '@'
+	CELL_DEAD = '.'
+)
+
 fn print_field(field[]array_int) {
+	mut s := new_string_builder(0)
 	for line in field {
-		mut s := '    '
+		s.write(OFFSET)
 		for j, cell in line {
 			if j == 0 || j == line.len - 1{continue}
-			s += if cell == 1{'@'} else { '.'}
+			if cell == 1 {
+				s.write(CELL_LIVE)
+			} else {
+				s.write(CELL_DEAD)
+			}
 		}
-		println(s)
+		s.writeln('')
 	}
-	println('')
+	println(s.str())
+	s.free()
 }
 
 pub fn gun() []array_int {
@@ -71,6 +83,10 @@ fn main() {
 				}
 			}
 		}
+		for i := 0; i < field.len; i++ {
+			field[i].free()
+		}
+		free(field.data)
 		field = new_field
 		print_field(field)
 		time.sleep_ms(100)
