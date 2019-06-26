@@ -1,5 +1,8 @@
 module main
-import time
+import (
+  os
+  time
+)
 
 const (
 	OFFSET = '    '
@@ -61,7 +64,6 @@ pub fn gun() []array_int {
 
 fn main() {
 	mut field := gun()
-	print_field(field)
 	for {
 		mut new_field := []array_int
 		for i, line in field {
@@ -87,9 +89,10 @@ fn main() {
 		for i := 0; i < field.len; i++ {
 			field[i].free()
 		}
+		os.clear()
+		print_field(field)
 		free(field.data)
 		field = new_field
-		print_field(field)
 		time.sleep_ms(100)
 	}
 }
